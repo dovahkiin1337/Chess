@@ -4,15 +4,24 @@ pygame.init()
 
 screen = pygame.display.set_mode((1000, 1000))
 pygame.display.set_caption("Chess Game")
+
+# Colors
 white = (255, 255, 255)
 black = (0, 0, 0)
 beige = (255, 178, 102)
 brown = (153, 76, 0)
-turn = 0
 
-# pictures
-svart_bonde_bild = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\Schacksvartbonde.png")
-vit_bonde_bild = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\.png")
+# Other variables
+turn = 0
+run = True
+white_pawns = []
+black_pawns = []
+pawns = []
+moving = False
+
+# Images
+black_pawn_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\Schacksvartbonde.png")
+white_pawn_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\.png")
 
 
 def is_even(number):
@@ -28,37 +37,61 @@ def is_odd(number):
     else:
         return False
 
+def round_down_to_hundred(number):
+    number = number / 100
+    number = int(number)
+    return number * 100
 
-class bonde:
+class pawn:
     def __init__(self, color, x):
         self.color = color
         self.x = x
-        if color == white:
+
+    def activate(self):
+        global moving
+        global turn
+        if self.color == white:
             if turn == 0:
                 self.y = 700
-            screen.blit(vit_bonde_bild, (self.x, self.y))
-        elif color == black:
+            screen.blit(white_pawn_image, (self.x, self.y))
+
+        elif self.color == black:
             if turn == 0:
                 self.y = 200
-            screen.blit(svart_bonde_bild, (self.x, self.y))
+            screen.blit(black_pawn_image, (self.x, self.y))
+
+        if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (1, 0, 0):
+            moving = True
+        if moving and mouse_click == (1, 0, 0) and mouse_y < self.y:
+            self.x = round_down_to_hundred(mouse_x)
+            self.y = round_down_to_hundred(mouse_y)
+            turn += 1
 
 
 
 
-run = True
+
+
+for i in range(100, 900, 100):
+    white_pawns.append(pawn(white, i))
+for i in range(100, 900, 100):
+    black_pawns.append(pawn(black, i))
+
+# Main loop
 while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
+
+# Start for defining variables
+    mouse_x = pygame.mouse.get_pos()[0]
+    mouse_y = pygame.mouse.get_pos()[1]
+    mouse_click = pygame.mouse.get_pressed()
+
+# End for defining variables
     screen.fill(white)
 
-
-    #start for drawing board
-    for i in range(100, 1000, 100):
-        pygame.draw.line(screen, black, (i, 100), (i, 900))
-    for i in range(100, 1000, 100):
-        pygame.draw.line(screen, black, (100, i), (900, i))
-
+    # Start for drawing board
     for i in range(100, 900, 100):
         for e in range(100, 900, 100):
             if is_even(i / 100) and not is_even(e / 100):
@@ -69,23 +102,11 @@ while run:
                 rect_color = beige
 
             pygame.draw.rect(screen, rect_color, (i, e, 100, 100))
-    #end for drawing board
+    # end for drawing board
 
-    bonde(white, 100)
-    bonde(white, 200)
-    bonde(white, 300)
-    bonde(white, 400)
-    bonde(white, 500)
-    bonde(white, 600)
-    bonde(white, 700)
-    bonde(white, 800)
-    bonde(black, 100)
-    bonde(black, 200)
-    bonde(black, 300)
-    bonde(black, 400)
-    bonde(black, 500)
-    bonde(black, 600)
-    bonde(black, 700)
-    bonde(black, 800)
+    pawns = white_pawns + black_pawns
+    for item in pawns:
+        item.activate()
 
     pygame.display.update()
+# End of main loop
