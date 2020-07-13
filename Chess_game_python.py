@@ -10,6 +10,7 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 beige = (255, 178, 102)
 brown = (153, 76, 0)
+grey = (162, 162, 162)
 
 # Other variables
 turn = 0
@@ -17,7 +18,6 @@ run = True
 white_pawns = []
 black_pawns = []
 pawns = []
-moving = False
 
 # Images
 black_pawn_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\Schacksvartbonde.png")
@@ -37,39 +37,49 @@ def is_odd(number):
     else:
         return False
 
+
 def round_down_to_hundred(number):
     number = number / 100
     number = int(number)
     return number * 100
 
+
 class pawn:
     def __init__(self, color, x):
         self.color = color
         self.x = x
+        self.move = False
+        self.y = 0
 
     def activate(self):
-        global moving
         global turn
         if self.color == white:
             if turn == 0:
                 self.y = 700
+            if is_even(turn):
+                if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y - 100 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
             screen.blit(white_pawn_image, (self.x, self.y))
 
         elif self.color == black:
             if turn == 0:
                 self.y = 200
+            if is_odd(turn):
+                if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y + 200 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
             screen.blit(black_pawn_image, (self.x, self.y))
-
-        if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (1, 0, 0):
-            moving = True
-        if moving and mouse_click == (1, 0, 0) and mouse_y < self.y:
-            self.x = round_down_to_hundred(mouse_x)
-            self.y = round_down_to_hundred(mouse_y)
-            turn += 1
-
-
-
-
 
 
 for i in range(100, 900, 100):
@@ -83,12 +93,17 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
-# Start for defining variables
+    # Start for defining variables
     mouse_x = pygame.mouse.get_pos()[0]
     mouse_y = pygame.mouse.get_pos()[1]
     mouse_click = pygame.mouse.get_pressed()
+    turn_text_x = 300
+    turn_text_y = 0
+    turn_text_width = 400
+    turn_text_height = 90
 
-# End for defining variables
+    # End for defining variables
+
     screen.fill(white)
 
     # Start for drawing board
@@ -102,7 +117,25 @@ while run:
                 rect_color = beige
 
             pygame.draw.rect(screen, rect_color, (i, e, 100, 100))
-    # end for drawing board
+    # End for drawing board
+
+    # Start for explaining whose turn it is
+
+    if is_even(turn):
+        pygame.draw.rect(screen, grey, (turn_text_x, turn_text_y, turn_text_width, turn_text_height), 0)
+        font = pygame.font.SysFont(None, 70)
+        text = font.render("White's Turn", True, white)
+        screen.blit(text, (turn_text_x + (turn_text_width / 2 - text.get_width() / 2),
+                           turn_text_y + (turn_text_height / 2 - text.get_height() / 2)))
+
+    elif is_odd(turn):
+        pygame.draw.rect(screen, grey, (turn_text_x, turn_text_y, turn_text_width, turn_text_height), 0)
+        font = pygame.font.SysFont(None, 70)
+        text = font.render("Black's Turn", True, black)
+        screen.blit(text, (turn_text_x + (turn_text_width / 2 - text.get_width() / 2),
+                           turn_text_y + (turn_text_height / 2 - text.get_height() / 2)))
+
+    # End for explaining whose turn it is
 
     pawns = white_pawns + black_pawns
     for item in pawns:
