@@ -19,11 +19,31 @@ white_pawns = []
 black_pawns = []
 pawns = []
 
-# Images
+# Start for Images
 black_pawn_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\Schacksvartbonde.png")
 white_pawn_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\.png")
 
+black_rook_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\Schacksvarttorn.png")
+white_rook_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
 
+black_knight_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+white_knight_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+
+black_bishop_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+white_bishop_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+
+black_king_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+white_king_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+
+black_queen_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+white_queen_image = pygame.image.load(r"C:\Users\Henrik\PycharmProjects\PYTHON\")
+# End for Images
+
+
+
+
+
+# Functions
 def is_even(number):
     if number / 2 == int(number / 2):
         return True
@@ -44,18 +64,362 @@ def round_down_to_hundred(number):
     return number * 100
 
 
+# Pawn class start(Not done)
 class pawn:
     def __init__(self, color, x):
         self.color = color
         self.x = x
         self.move = False
         self.y = 0
+        self.alive = True
 
     def activate(self):
         global turn
         if self.color == white:
             if turn == 0:
                 self.y = 700
+            if is_even(turn):
+                if self.y == 700:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y - 200 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y - 100 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+            if self.alive:
+                screen.blit(white_pawn_image, (self.x, self.y))
+
+        elif self.color == black:
+            if turn == 0:
+                self.y = 200
+            if is_odd(turn):
+                if self.y == 200:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y + 300 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y + 200 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+
+            if self.alive:
+                screen.blit(black_pawn_image, (self.x, self.y))
+
+
+# Pawn class end
+
+# Rook class start(Not done)
+class rook:
+    def __init__(self, color, x):
+        self.color = color
+        self.x = x
+        self.move = False
+        self.y = 0
+        self.alive = True
+
+    def activate(self):
+        global turn
+        if self.color == white:
+            if turn == 0:
+                self.y = 800
+            if is_even(turn):
+                if self.y == 800:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y - 200 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y - 100 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+            if self.alive:
+                screen.blit(white_pawn_image, (self.x, self.y))
+
+        elif self.color == black:
+            if turn == 0:
+                self.y = 100
+            if is_odd(turn):
+                if self.y == 100:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y + 300 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y + 200 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+
+            if self.alive:
+                screen.blit(black_pawn_image, (self.x, self.y))
+
+# Rook class end
+
+
+# Knight class start(Not done)
+class knight:
+    def __init__(self, color, x):
+        self.color = color
+        self.x = x
+        self.move = False
+        self.y = 0
+        self.alive = True
+
+    def activate(self):
+        global turn
+        if self.color == white:
+            if turn == 0:
+                self.y = 800
+            if is_even(turn):
+                if self.y == 800:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y - 200 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y - 100 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+            if self.alive:
+                screen.blit(white_pawn_image, (self.x, self.y))
+
+        elif self.color == black:
+            if turn == 0:
+                self.y = 100
+            if is_odd(turn):
+                if self.y == 200:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y + 300 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y + 200 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+
+            if self.alive:
+                screen.blit(black_pawn_image, (self.x, self.y))
+# Knight class end
+
+
+# Bishop class start(Not done)
+class bishop:
+    def __init__(self, color, x):
+        self.color = color
+        self.x = x
+        self.move = False
+        self.y = 0
+        self.alive = True
+
+    def activate(self):
+        global turn
+        if self.color == white:
+            if turn == 0:
+                self.y = 800
+            if is_even(turn):
+                if self.y == 700:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y - 200 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y - 100 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+            if self.alive:
+                screen.blit(white_pawn_image, (self.x, self.y))
+
+        elif self.color == black:
+            if turn == 0:
+                self.y = 100
+            if is_odd(turn):
+                if self.y == 200:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y + 300 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y + 200 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+
+            if self.alive:
+                screen.blit(black_pawn_image, (self.x, self.y))
+
+# Bishop class end
+
+# King class start(Not done)
+class king:
+    def __init__(self, color, x):
+        self.color = color
+        self.x = x
+        self.move = False
+        self.y = 0
+        self.alive = True
+
+    def activate(self):
+        global turn
+        if self.color == white:
+            if turn == 0:
+                self.y = 800
+            if is_even(turn):
+                if self.y == 700:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y - 200 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y - 100 < mouse_y < self.y and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+            if self.alive:
+                screen.blit(white_pawn_image, (self.x, self.y))
+
+        elif self.color == black:
+            if turn == 0:
+                self.y = 100
+            if is_odd(turn):
+                if self.y == 200:
+                    if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                            1, 0, 0):
+                        self.move = True
+                    if self.move and mouse_click == (1, 0, 0):
+                        if self.y + 300 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                            self.x = round_down_to_hundred(mouse_x)
+                            self.y = round_down_to_hundred(mouse_y)
+                            turn += 1
+                            self.move = False
+
+                elif (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (
+                        1, 0, 0):
+                    self.move = True
+                if self.move and mouse_click == (1, 0, 0):
+                    if self.y + 200 > mouse_y > self.y + 100 and self.x + 100 > mouse_x > self.x:
+                        self.x = round_down_to_hundred(mouse_x)
+                        self.y = round_down_to_hundred(mouse_y)
+                        turn += 1
+                        self.move = False
+
+            if self.alive:
+                screen.blit(black_pawn_image, (self.x, self.y))
+# King class end
+
+
+# Queen class start(Not done)
+class queen:
+    def __init__(self, color, x):
+        self.color = color
+        self.x = x
+        self.move = False
+        self.y = 0
+        self.alive = True
+
+    def activate(self):
+        global turn
+        if self.color == white:
+            if turn == 0:
+                self.y = 800
             if is_even(turn):
                 if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (1, 0, 0):
                     self.move = True
@@ -65,11 +429,12 @@ class pawn:
                         self.y = round_down_to_hundred(mouse_y)
                         turn += 1
                         self.move = False
-            screen.blit(white_pawn_image, (self.x, self.y))
+            if self.alive:
+                screen.blit(white_pawn_image, (self.x, self.y))
 
         elif self.color == black:
             if turn == 0:
-                self.y = 200
+                self.y = 100
             if is_odd(turn):
                 if (self.x + 100) > mouse_x > self.x and (self.y + 100) > mouse_y > self.y and mouse_click == (1, 0, 0):
                     self.move = True
@@ -79,7 +444,10 @@ class pawn:
                         self.y = round_down_to_hundred(mouse_y)
                         turn += 1
                         self.move = False
-            screen.blit(black_pawn_image, (self.x, self.y))
+
+            if self.alive:
+                screen.blit(black_pawn_image, (self.x, self.y))
+# Queen class end
 
 
 for i in range(100, 900, 100):
@@ -93,6 +461,7 @@ while run:
         if event.type == pygame.QUIT:
             run = False
 
+
     # Start for defining variables
     mouse_x = pygame.mouse.get_pos()[0]
     mouse_y = pygame.mouse.get_pos()[1]
@@ -105,7 +474,7 @@ while run:
     # End for defining variables
 
     screen.fill(white)
-
+    screen.blit(black_rook_image, (0, 0))
     # Start for drawing board
     for i in range(100, 900, 100):
         for e in range(100, 900, 100):
